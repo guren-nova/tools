@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRコード生成ツール</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>QRコード生成ツール</h1>
+    <p>URLやテキストを入力してQRコードを生成しましょう</p>
+    <input type="text" id="qrInput" placeholder="URLまたはテキストを入力">
+    <button onclick="generateQRCode()">QRコード生成</button>
+
+    <div class="qr-code" id="qrCode"></div>
+    <button class="download-button" id="downloadButton" style="display: none;" onclick="downloadQRCode()">QRコードをダウンロード</button>
+</div>
+
+<div class="footer">
+    <p>Developed by <a href="https://github.com/guren-nova" target="_blank">紅蓮ノヴァ</a> on GitHub</p>
+</div>
+<script src="script.js"></script>
+
+</body>
+</html>
