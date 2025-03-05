@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+header {
+    background-color: #222;
+    color: white;
+    padding: 15px;
+    font-size: 24px;
+}
+
+.profile-section, .tools-section {
+    width: 80%;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.profile img {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.profile-info {
+    text-align: left;
+}
+
+.buttons {
+    margin-top: 10px;
+}
+
+.buttons a {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.tool {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tool a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
