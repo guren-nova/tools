@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internet Speed Measurement Tool</title>
+
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self';">
+  <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <h1>インターネット速度計測</h1>
+    <button id="startButton">計測開始</button>
+    <div id="result"></div>
+
+<div id="consentPopup" class="popup">
+  <div class="popup-content">
+    <h2>プライバシーポリシーの同意</h2>
+    <p>本サービスを利用するには、プライバシーポリシーに同意する必要があります。</p>
+    <p><a href="privacy.html" target="_blank">プライバシーポリシーはこちら</a></p>
+    <button id="agreeButton">同意する</button>
+    <button id="declineButton">同意しない</button>
+  </div>
+</div>
+  </div>
+</body>
+</html>
