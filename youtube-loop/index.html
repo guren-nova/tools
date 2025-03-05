@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube 万能Loop君</title>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>YouTube 万能Loop君</h1>
+    <p>YouTubeの動画URLを入力してください:</p>
+    <input type="text" id="videoUrl" placeholder="例: https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+    <button onclick="loadVideo()">動画を再生</button>
+
+    <div id="player"></div>
+    <div>
+        <button onclick="playVideo()">再生</button>
+        <button onclick="pauseVideo()">一時停止</button>
+        <button onclick="stopVideo()">停止</button>
+    </div>
+    <div>
+        <label for="volumeSlider">音量調整</label><br>
+        <input type="range" id="volumeSlider" min="0" max="100" value="100" onchange="changeVolume()">
+    </div>
+    <div>
+        <label for="seekSlider">シークバー</label><br>
+        <input type="range" id="seekSlider" min="0" max="100" value="0" onchange="seekTo()">
+    </div>
+    <footer>
+        <p>開発者: <a href="https://github.com/guren-nova" target="_blank">紅蓮ノヴァ</a></p>
+        <p>© 紅蓮ノヴァ.</p>
+    </footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
