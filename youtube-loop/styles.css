@@ -1,0 +1,34 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+input {
+    padding: 10px;
+    margin: 20px;
+    width: 300px;
+}
+#player {
+    margin-top: 20px;
+}
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+}
+#volumeSlider {
+    width: 80%;
+    margin: 10px 0;
+}
+#seekSlider {
+    width: 80%;
+    margin: 10px 0;
+}
+footer {
+    margin-top: 30px;
+    font-size: 14px;
+}
+footer a {
+    text-decoration: none;
+    color: #007BFF;
+}
