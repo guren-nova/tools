@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>README Forge - GitHubプロフィールビルダー</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body.dark {
+      background-color: #111827;
+      color: #f9fafb;
+    }
+    .dark .prose {
+      color: white;
+    }
+    textarea {
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <header class="flex justify-between items-center p-4 bg-white shadow dark:bg-gray-800">
+    <h1 class="text-2xl font-bold text-blue-600">README Forge</h1>
+    <div class="space-x-2">
+      <button onclick="toggleDarkMode()" class="bg-gray-800 text-white px-4 py-2 rounded">🌙 テーマ切替</button>
+      <select id="templateSelector" onchange="loadTemplate()" class="px-4 py-2 border rounded">
+        <option value="">📂 テンプレート選択</option>
+        <option value="simple">シンプル</option>
+        <option value="developer">開発者向け</option>
+        <option value="product">プロダクト紹介</option>
+        <option value="stats">統計・バッジ特化</option>
+        <option value="dark">ダークミニマル</option>
+        <option value="full">フル機能</option>
+        <option value="sns">SNS重視</option>
+        <option value="beginner">初心者向け</option>
+        <option value="ai">AI研究者</option>
+        <option value="educator">教育者/講師</option>
+        <option value="gamer">ゲーマー/配信者</option>
+      </select>
+    </div>
+  </header>
+
+  <main class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
+    <section>
+      <h2 class="text-xl font-semibold mb-2">Markdownエディタ</h2>
+      <textarea id="markdownInput" class="w-full h-[60vh] p-4 bg-white dark:bg-gray-800 border rounded resize-y font-mono" placeholder="# あなたのREADMEをここに書いてください..."></textarea>
+      <div class="flex mt-4 gap-2 flex-wrap">
+        <button onclick="copyMarkdown()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">📋 コピー</button>
+        <button onclick="downloadMarkdown()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">⬇️ ダウンロード</button>
+        <button onclick="clearEditor()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">🧹 クリア</button>
+      </div>
+    </section>
+    <section>
+      <h2 class="text-xl font-semibold mb-2">リアルタイムプレビュー</h2>
+      <div id="preview" class="prose max-w-none p-4 bg-white dark:bg-gray-800 border rounded overflow-auto h-[60vh]"></div>
+    </section>
+  </main>
+
+  <script>
+    const input = document.getElementById('markdownInput');
+    const preview = document.getElementById('preview');
+    const templates = {
+      simple: `# 👋 こんにちは！
+
+これはシンプルなREADMEテンプレートです。
+
+- 🔧 スキル: HTML / CSS / JavaScript
+- 📨 お問い合わせ: example@example.com`,
+
+      developer: `# 💻 開発者紹介
+
+## 🔧 スキルセット
+
+- React / Vue / Svelte
+- Node.js / Express
+- MongoDB / PostgreSQL
+
+## 🔗 SNS
+
+[Twitter](https://twitter.com/) | [Zenn](https://zenn.dev/)`,
+
+      product: `# 🚀 プロダクト紹介
+
+## 📱 アプリ名: AwesomeApp
+
+**説明**: これは最強のタスク管理アプリです。
+
+- クロスプラットフォーム対応
+- リアルタイム同期
+- チーム機能内蔵`,
+
+      stats: `# 📊 GitHub Stats
+
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=your-username&show_icons=true)
+
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=your-username)`,
+
+      dark: `# 🖤 ダークテーマテンプレート
+
+> ミニマルかつスタイリッシュに
+
+## 🌟 特徴
+
+- 黒背景
+- 無駄を省いた構成`,
+
+      full: `# 🧠 フル機能テンプレート
+
+## 📌 自己紹介
+こんにちは！フルスタック開発者です。
+
+## 🚀 スキル
+- Frontend: React, Vue, Svelte
+- Backend: Node.js, Go, Django
+
+## 📈 GitHub Stats
+![Stats](https://github-readme-stats.vercel.app/api?username=your-username&show_icons=true)
+
+## 🏆 Trophy
+[![Trophy](https://github-profile-trophy.vercel.app/?username=your-username)](https://github.com/ryo-ma/github-profile-trophy)`,
+
+      sns: `# 🔗 SNS重視テンプレート
+
+- [📘 Facebook](https://facebook.com/)
+- [📸 Instagram](https://instagram.com/)
+- [🐦 Twitter](https://twitter.com/)`,
+
+      beginner: `# 🐣 初心者向けテンプレート
+
+## 👋 はじめまして！
+
+プログラミングを学び始めた初心者です。日々の成長をGitHubに記録していきます！`,
+
+      ai: `# 🤖 AI研究者テンプレート
+
+## 🧠 研究分野
+
+- 深層学習
+- 自然言語処理
+- 生成AI
+
+## 📂 プロジェクト
+
+- GPT関連
+- Transformer系論文実装`,
+
+      educator: `# 👨‍🏫 教育者用テンプレート
+
+## 📚 教えている内容
+
+- プログラミング（Python / JavaScript）
+- Git / GitHub
+
+## 🎥 オンライン講座
+
+- [Udemy講座リンク](https://udemy.com/)
+- [YouTubeチャンネル](https://youtube.com/)`,
+
+      gamer: `# 🎮 ゲーマー向けテンプレート
+
+## 🕹️ 自己紹介
+
+- 好きなゲーム: Apex Legends, Valorant, Minecraft
+- Twitch配信やってます！ → [Twitch](https://twitch.tv/)`
+    };
+
+    function updatePreview() {
+      const markdown = input.value;
+      preview.innerHTML = marked.parse(markdown);
+      localStorage.setItem("markdown", markdown);
+    }
+
+    function copyMarkdown() {
+      navigator.clipboard.writeText(input.value).then(() => alert("📋 コピー完了！"));
+    }
+
+    function downloadMarkdown() {
+      const blob = new Blob([input.value], { type: "text/markdown" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "README.md";
+      link.click();
+    }
+
+    function clearEditor() {
+      input.value = "";
+      updatePreview();
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+    }
+
+    function loadTemplate() {
+      const selected = document.getElementById("templateSelector").value;
+      if (templates[selected]) {
+        input.value = templates[selected];
+        updatePreview();
+      }
+    }
+
+    input.addEventListener("input", updatePreview);
+
+    window.onload = () => {
+      const saved = localStorage.getItem("markdown");
+      if (saved) {
+        input.value = saved;
+        updatePreview();
+      }
+    };
+  </script>
+</body>
+</html>
