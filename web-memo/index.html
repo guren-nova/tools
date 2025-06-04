@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webメモ帳</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #1e1e2f;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 1rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background-color: #2c2c3e;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      padding: 1.5rem;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    textarea {
+      width: 100%;
+      height: 300px;
+      background-color: #1e1e2f;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 1rem;
+      font-size: 1rem;
+      resize: vertical;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+    }
+
+    textarea:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #3b82f6;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+    }
+
+    button {
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2563eb;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Webメモ帳</h1>
+    <textarea id="memo" placeholder="ここにメモを入力..."></textarea>
+    <div class="actions">
+      <button onclick="clearMemo()">リセット</button>
+      <button onclick="saveMemo()">保存</button>
+    </div>
+  </div>
+
+  <script>
+    // クッキーを取得
+    function getCookie(name) {
+      const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      if (match) return decodeURIComponent(match[2]);
+      return "";
+    }
+
+    // クッキーをセット（365日）
+    function setCookie(name, value, days = 365) {
+      const d = new Date();
+      d.setTime(d.getTime() + (days*24*60*60*1000));
+      const expires = "expires=" + d.toUTCString();
+      document.cookie = name + "=" + encodeURIComponent(value) + ";" + expires + ";path=/";
+    }
+
+    // 保存処理
+    function saveMemo() {
+      const memo = document.getElementById("memo").value;
+      setCookie("webMemo", memo);
+      alert("メモを保存しました！");
+    }
+
+    // クリア処理
+    function clearMemo() {
+      document.getElementById("memo").value = "";
+      setCookie("webMemo", "");
+      alert("メモをリセットしました！");
+    }
+
+    // 初期読み込み
+    window.onload = function() {
+      const saved = getCookie("webMemo");
+      if (saved) {
+        document.getElementById("memo").value = saved;
+      }
+    }
+  </script>
+</body>
+      <div class="footer" style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.7;">
+      <p>
+        🛠️ 開発者: <a href="https://github.com/guren-nova" target="_blank" style="color: #60a5fa; text-decoration: none;">@guren-nova</a> |
+        💾 <a href="https://github.com/guren-nova/tools/web-memo-tool" target="_blank" style="color: #60a5fa; text-decoration: none;">ソースコードを見る</a>
+      </p>
+    </div>
+</html>
